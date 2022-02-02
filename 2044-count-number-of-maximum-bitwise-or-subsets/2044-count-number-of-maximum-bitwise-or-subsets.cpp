@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int fun(int idx,vector<int>&nums,int n,int orsum,int k)
+    int fun(int idx,vector<int>&nums,int n,int orsum,int k,vector<int>&dp)
     {
         if(idx==n)
         {
@@ -13,12 +13,9 @@ public:
                 return 0;
             }
         }
-       // orsum |= nums[i];
-        int take = fun(idx+1,nums,n,orsum|nums[idx],k);
-        int nottake = fun(idx+1,nums,n,orsum,k);
-        
-        return take+nottake;
-        
+        int take = fun(idx+1,nums,n,orsum|nums[idx],k,dp);
+        int nottake =fun(idx+1,nums,n,orsum,k,dp);
+        return dp[idx] = take+nottake;
     }
     int countMaxOrSubsets(vector<int>& nums) 
     {
@@ -27,12 +24,13 @@ public:
         {
             return 1;
         }
+        vector<int>dp(n+1,-1);
         int k=0;
         for(int i=0;i<n;i++)
         {
-            k = k | nums[i];
+            k = k|nums[i];
         }
-        return fun(0,nums,n,0,k);
+        return fun(0,nums,n,0,k,dp);
         
     }
 };
