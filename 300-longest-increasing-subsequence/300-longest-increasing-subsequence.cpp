@@ -8,7 +8,7 @@ public:
         {
             for(int j=0;j<i;j++)
             {
-                if(nums[i]>nums[j]&& lis[i]<=lis[j])
+                if(nums[i]>nums[j]&& lis[i]<lis[j]+1)
                 {
                     lis[i]=lis[j]+1;
                 }
