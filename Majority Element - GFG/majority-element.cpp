@@ -18,17 +18,36 @@ class Solution{
         
         // your code here
         int n = size;
-        map<int,int>mp;
+        int idx=0;
+        int cnt=1;
+        for(int i=1;i<n;i++)
+        {
+            if(a[i]==a[idx])
+            {
+                cnt++;
+            }
+            else
+            {
+                cnt--;
+            }
+            
+            if(cnt==0)
+            {
+                idx=i;
+                cnt=1;
+            }
+        }
+        int count=0;
         for(int i=0;i<n;i++)
         {
-            mp[a[i]]++;
-        }        
-        for(auto it:mp)
-        {
-            if(it.second>n/2)
+            if(a[idx]==a[i])
             {
-                return it.first;
+                count++;
             }
+        }
+        if(count>n/2)
+        {
+            return a[idx];
         }
         return -1;
     }
