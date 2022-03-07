@@ -1,16 +1,19 @@
 class Solution {
 public:
-    bool isvalid(int x,int y,vector<vector<int>>&vis,int n,int m)
+    bool isvalid(int x,int y,int n,int m,vector<vector<int>>&vis)
     {
-        if(x<0 ||y<0 || x>=n || y>=m || vis[x][y]==1)
+        if(x<0 || y<0 || x>=n || y>=m || vis[x][y]==1)
+        {
             return false;
+        }
         return true;
-        
     }
-    void dfs(int x,int y,vector<vector<int>> &grid,vector<vector<int>>&vis ,int clr,int newcolor,int n,int m)
+    void fun(int x,int y,vector<vector<int> >&grid,vector<vector<int>>&vis,int clr,int newcolor,int n,int m)
     {
-        if(x<0 || y<0 || x>=n || y>=m || grid[x][y]!=clr)return;
-        
+        if(x<0 || y<0 || x>=n || y>=m || grid[x][y]!=clr)
+        {
+            return;
+        }
         vis[x][y]=1;
         grid[x][y] = newcolor;
         
@@ -19,11 +22,11 @@ public:
         
         for(int i=0;i<4;i++)
         {
-            int newx = x+dx[i];
-            int newy = y+dy[i];
-            if(isvalid(newx,newy,vis,n,m) && abs(grid[newx][newy])==clr)
+            if(isvalid(x+dx[i],y+dy[i],n,m,vis) && grid[x+dx[i]][y+dy[i]]==clr)
             {
-                dfs(newx,newy,grid,vis,clr,newcolor,n,m);
+                int newx = x+dx[i];
+                int newy = y+dy[i];
+                fun(newx,newy,grid,vis,clr,newcolor,n,m);
             }
         }
     }
@@ -32,10 +35,20 @@ public:
         int n = image.size();
         int m = image[0].size();
         int clr = image[sr][sc];
-        vector<vector<int> >vis(n,vector<int>(m,0));
-        dfs(sr,sc,image,vis,clr,newColor,n,m);
-       
-        return image;
         
+        vector<vector<int> > vis(n,vector<int>(m,0));
+        fun(sr,sc,image,vis,clr,newColor,n,m);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(image[i][j]<0)
+                {
+                    image[i][j]=newColor;
+                }
+            }
+        }
+        
+        return image;
     }
 };
