@@ -25,51 +25,29 @@ public:
         if (k%n== 0) {
             return head;
         }
-       
-        ListNode* curr=head;
-
-        for (int i=0; i<n-(k%n)-1; ++i) {
-            curr = curr->next;
-        }
-        //prev->next = nullptr;
-        ListNode* last = curr;
-        
-        ListNode* newhead = last->next;
-        last->next = nullptr;
-        ListNode* t = newhead;
-        while(t->next!=NULL)
+        if(head->next==nullptr)
         {
-            t = t->next;
-        }
-        t->next = head;
-        
-        return newhead;
-        
-        
-       /*if (head == nullptr) {
-            return nullptr;
-        }
-        ListNode* temp = head;
-        int len = 0;
-        while (temp) {
-            temp = temp->next;
-            ++len;
-        }
-        if (k%len == 0) {
             return head;
         }
-        temp = head;
-        for (int i=0; i<len-(k%len)-1; ++i) {
-            temp = temp->next;
+        int d = k%n;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(d-- && fast)
+        {
+            fast = fast->next;
         }
-        ListNode* last = temp;
-        ListNode* newHead = last->next;
-        last->next = nullptr;
-        temp = newHead;
-        while (temp->next) {
-            temp = temp->next;
+        ListNode* prev = nullptr;
+        ListNode* fast_prev=nullptr;
+        while(fast)
+        {
+            prev = slow;
+            slow = slow->next;
+            fast_prev = fast;
+            fast=fast->next;
         }
-        temp->next = head;
-        return newHead;*/
+        prev->next=nullptr;
+        fast_prev->next =head;
+        
+        return slow;
     }
 };
