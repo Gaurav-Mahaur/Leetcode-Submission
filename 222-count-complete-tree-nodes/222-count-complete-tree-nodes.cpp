@@ -17,31 +17,24 @@ public:
         {
             return 0;
         }
-        queue<TreeNode*>q;
-        q.push(root);
-        
-        int cnt=0;
-        while(!q.empty())
+        int lh=0;
+        int rh =0;
+        TreeNode* l = root;
+        TreeNode* r = root;
+        while(l)
         {
-            int  n = q.size();
-            
-            for(int i=0;i<n;i++)
-            {
-                TreeNode* t = q.front();
-                q.pop();
-                
-                cnt++;
-                
-                if(t->left)
-                {
-                    q.push(t->left);
-                }
-                if(t->right)
-                {
-                    q.push(t->right);
-                }
-            }
+            lh++;
+            l = l->left;
         }
-        return cnt;
+        while(r)
+        {
+            rh++;
+            r = r->right;
+        }
+        if(lh==rh)
+        {
+            return pow(2,lh)-1;
+        }
+        return countNodes(root->left)+countNodes(root->right)+1;
     }
 };
