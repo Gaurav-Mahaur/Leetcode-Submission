@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void dfs(int src,vector<int>adj[],vector<int>&vis)
+    void dfs(int src,vector<int>adj[],vector<int>&vis,int n)
     {
         vis[src]=1;
         
@@ -8,7 +8,7 @@ public:
         {
             if(!vis[it])
             {
-                dfs(it,adj,vis);
+                dfs(it,adj,vis,n);
             }
         }
     }
@@ -20,13 +20,10 @@ public:
         {
             for(int j=0;j<n;j++)
             {
-                if(i!=j)
+                if(i!=j && isConnected[i][j]==1)
                 {
-                    if(isConnected[i][j]==1)
-                    {
-                        adj[i+1].push_back(j+1);
-                        //adj[j].push_back(i);
-                    }
+                    adj[i+1].push_back(j+1);
+                    adj[j+1].push_back(i+1);
                 }
             }
         }
@@ -34,12 +31,13 @@ public:
         int cnt=0;
         for(int i=1;i<=n;i++)
         {
-            if(!vis[i])
+            if(vis[i]==0)
             {
-                dfs(i,adj,vis);
+                dfs(i,adj,vis,n);
                 cnt++;
             }
         }
+        
         return cnt;
         
     }
