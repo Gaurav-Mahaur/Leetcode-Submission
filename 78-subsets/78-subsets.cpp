@@ -1,12 +1,10 @@
 class Solution {
 public:
-    
-    vector<vector<int>> subsets(vector<int>& nums)
+    vector<vector<int>> subsets(vector<int>& nums) 
     {
         int n = nums.size();
+        vector<vector<int> >ans;
         vector<int>a;
-        vector<vector<int> > v;
-        
         for(int i=0;i<(1<<n);i++)
         {
             a.clear();
@@ -17,10 +15,9 @@ public:
                     a.push_back(nums[j]);
                 }
             }
-            v.push_back(a);
+            ans.push_back(a);
         }
-        
-        return v;
+        return ans;
         
     }
 };
