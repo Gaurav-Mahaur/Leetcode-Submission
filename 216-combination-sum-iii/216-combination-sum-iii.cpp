@@ -1,40 +1,40 @@
 class Solution {
 public:
-    void helping(int idx,vector<int>&a,int n,int sum,int size,vector<int>&v,set<vector<int> >&res,int s)
+    void helping(int idx,vector<int>arr,vector<int>&temp,int target,int k,set<vector<int> >&res,int &currsum)
     {
-        if(idx==n)
+        if(idx==9)
         {
-            if(s==sum && v.size()==size)
+            if(currsum==target && temp.size()==k)
             {
-                res.insert(v);
+                res.insert(temp);
             }
             return;
         }
-        v.push_back(a[idx]);
-        s += a[idx];
-        helping(idx+1,a,n,sum,size,v,res,s);
-        s -= a[idx];
-        v.pop_back();
-        helping(idx+1,a,n,sum,size,v,res,s);
+        currsum += arr[idx];
+        temp.push_back(arr[idx]);
+        helping(idx+1,arr,temp,target,k,res,currsum);
+        currsum -= arr[idx];
+        temp.pop_back();
+        
+        helping(idx+1,arr,temp,target,k,res,currsum);
     }
     vector<vector<int>> combinationSum3(int k, int n) 
     {
-        vector<int>a(9);
+        vector<int>arr;
         for(int i=0;i<9;i++)
         {
-            a[i]=i+1; 
+            arr.push_back(i+1);
         }
-        int n1 = a.size();
-        vector<int>v;
         set<vector<int> >res;
-        int sum=n;
-        helping(0,a,n1,sum,k,v,res,0);
+        vector<int>tmp;
+        int sum=0;
+        helping(0,arr,tmp,n,k,res,sum);
         vector<vector<int> >ans;
         for(auto it:res)
         {
             ans.push_back(it);
         }
-        return ans;
         
+        return ans;
     }
 };
