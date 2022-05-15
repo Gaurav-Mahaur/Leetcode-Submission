@@ -11,29 +11,31 @@
  */
 class Solution {
 public:
-    int ans;
-   void kthsmallest(TreeNode* &root,int &k)
+    
+   TreeNode* kthsmallest(TreeNode* &root,int &k)
    {
        if(root==nullptr)
        {
-           return;
+           return nullptr;
        }
        
-       kthsmallest(root->left,k);
-     
+       TreeNode* left = kthsmallest(root->left,k);
+       if(left)
+       {
+           return left;
+       }
        k--;
        if(k==0)
        {
-           ans = root->val;
-           return ;
+           return root;
        }
-       kthsmallest(root->right,k);
+       return kthsmallest(root->right,k);
    }
     int kthSmallest(TreeNode* root, int k)
     {
-      kthsmallest(root,k);
+        TreeNode* ans = kthsmallest(root,k);
         
-        return ans;
+        return ans->val;
         
         
         
