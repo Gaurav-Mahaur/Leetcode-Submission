@@ -11,29 +11,31 @@
  */
 class Solution {
 public:
-    
-    void rec(vector<int>&sol , TreeNode* root)
-    {
-        if(root==nullptr)
-        {
-            return;
-        }
-        rec(sol,root->left);
-        sol.push_back(root->val);
-        rec(sol,root->right);
-    }
+    int ans;
+   void kthsmallest(TreeNode* &root,int &k)
+   {
+       if(root==nullptr)
+       {
+           return;
+       }
+       
+       kthsmallest(root->left,k);
+     
+       k--;
+       if(k==0)
+       {
+           ans = root->val;
+           return ;
+       }
+       kthsmallest(root->right,k);
+   }
     int kthSmallest(TreeNode* root, int k)
     {
-        if(!root)
-        {
-            return 0;
-        }
-        vector<int>sol;
-        rec(sol,root);
+      kthsmallest(root,k);
         
-        int small = sol[k-1];
+        return ans;
         
-        return small;
+        
         
     }
 };
