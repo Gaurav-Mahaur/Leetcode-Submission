@@ -1,33 +1,39 @@
 class Solution {
 public:
-    int dp[10000 + 1][12 + 1];
-    
-    int fun(vector<int>&a,int n,int target)
+    int fun(vector<int>&coins,int n,int target,vector<vector<int>>&dp)
     {
-        if (n == 0 || target == 0)
+        if(n==0 || target==0)
         {
-            return (target == 0) ? 0 : INT_MAX - 1;
-        }  
-        
-        if (dp[target][n] != -1) 
-            return dp[target][n];
-        if(a[n-1]<=target)
-        {
-            return dp[target][n]=min(1+fun(a,n,target-a[n-1]),fun(a,n-1,target));
+            if(target==0)
+            {
+                return 0;
+            }
+            else
+            {
+                return INT_MAX-1;
+            }
         }
-        return dp[target][n]=fun(a,n-1,target);
+        if(dp[n][target]!=-1)
+        {
+            return dp[n][target];
+        }
+        if(coins[n-1]<=target)
+        {
+            return dp[n][target] = min(1+fun(coins,n,target-coins[n-1],dp),fun(coins,n-1,target,dp));
+        }
+        return dp[n][target]= fun(coins,n-1,target,dp);
     }
     int coinChange(vector<int>& coins, int amount) 
     {
-         memset(dp, -1, sizeof(dp));
         int n = coins.size();
-        int mincoin = fun(coins,n,amount);
-        if(mincoin==INT_MAX-1)
+        vector<vector<int>>dp(n+1,vector<int>(amount+1,-1));
+        
+       int minn=  fun(coins,n,amount,dp);
+        
+        if(minn==INT_MAX -1)
         {
             return -1;
         }
-        return mincoin;
-        
-        
+        return minn;
     }
 };
