@@ -9,34 +9,34 @@ public:
             mp[s[i]]++;
         }
         priority_queue<pair<int,char>>pq;
+        
         for(auto it:mp)
         {
             pq.push({it.second,it.first});
         }
-        string ans="";
+        string ans = "";
+        
         while(pq.size()>1)
         {
-            pair<int,char>t1 = pq.top();
+            pair<int,char>a = pq.top();
             pq.pop();
-            pair<int,char>t2 = pq.top();
+            pair<int,char>b = pq.top();
             pq.pop();
             
-            ans += t1.second;
-            ans += t2.second;
+            ans += a.second;
+            ans += b.second;
             
-            t1.first--;
-            t2.first--;
-            
-            if(t1.first>0)
+            a.first--;
+            b.first--;
+            if(a.first>0)
             {
-                pq.push(t1);
+                pq.push(a);
             }
-            if(t2.first>0)
+            if(b.first>0)
             {
-                pq.push(t2);
+                pq.push(b);
             }
         }
-        
         if(pq.size()>0)
         {
             if(pq.top().first>1)
@@ -46,6 +46,7 @@ public:
             else
             {
                 ans += pq.top().second;
+                pq.pop();
             }
         }
         return ans;
