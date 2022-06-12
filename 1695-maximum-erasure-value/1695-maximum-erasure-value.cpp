@@ -3,26 +3,27 @@ public:
     int maximumUniqueSubarray(vector<int>& nums) 
     {
         int n = nums.size();
-        set<int>s;
-        int l=0;
-        int r=0;
+        
+        set<int>st;
+        int j=0;
+        int i=0;
         int currsum=0;
-        int maxx = INT_MIN;
-        while(r<n)
+        int ans = INT_MIN;
+        while(i<n)
         {
-            while(s.find(nums[r])!=s.end() && l<r)
+            while(st.find(nums[i])!=st.end() && j<i)
             {
-                currsum -= nums[l];
-                s.erase(nums[l]);
-                l++;
-                
+                currsum -= nums[j];
+                st.erase(nums[j]);
+                j++;
             }
-            currsum += nums[r];
-            maxx = max(maxx,currsum);
+            currsum += nums[i];
+            ans = max(ans,currsum);
             
-            s.insert(nums[r]);
-            r++;
+            st.insert(nums[i]);
+            i++;
         }
-        return maxx;
+        return ans;
+        
     }
 };
